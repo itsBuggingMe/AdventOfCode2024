@@ -6,7 +6,8 @@ internal class Day1 : ISolution
 {
     public int Day => 1;
 
-    public object Solve1(string input) => input.Split('\n')
+    public object Solve1(string input) => input
+        .Split('\n')
         .Select(s => s.Split("   "))
         .Aggregate((new StringBuilder(), new StringBuilder()), (t, s) => (t.Item1.Append(' ').Append(s[0]), t.Item2.Append(' ').Append(s[1])),
             t => t.Item1.ToString().Split(' ').Skip(1).Select(int.Parse).OrderBy(i => i)
@@ -14,7 +15,8 @@ internal class Day1 : ISolution
         .Select(t => t.First - t.Second)
         .Sum(Math.Abs);
 
-    public object Solve2(string input) => input.Split('\n')
+    public object Solve2(string input) => input
+        .Split('\n')
         .Select(s => s.Split("   "))
         .Aggregate((new StringBuilder(), new StringBuilder()), (t, s) => (t.Item1.Append(' ').Append(s[0]), t.Item2.Append(' ').Append(s[1])),
             t => t.Item1.ToString().Split(' ').Skip(1).Select(
