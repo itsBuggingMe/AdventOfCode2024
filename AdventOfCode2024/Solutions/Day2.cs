@@ -26,22 +26,12 @@ internal class Day2 : ISolution
         .Select(s => s.ToList())
         .Where(s => s.Zip(s.Skip(1))
             .Select(t => (Math.Sign(s[0] - s[1]), t))
-            .All(t => DeltaIsValid(t.Item2.First - t.Item2.Second) && Math.Sign(t.Item2.First - t.Item2.Second) == t.Item1)
+            .All(t => t.Item2.First - t.Item2.Second != 0 && Math.Abs(t.Item2.First - t.Item2.Second) <= 3 && Math.Sign(t.Item2.First - t.Item2.Second) == t.Item1)
             || Enumerable.Range(0, s.Count)
                 .Any(i => Array.Empty<int>()
                     .Aggregate(s
                         .Where((_, index) => index != i).ToList(), (a, b) => null!, s => s.Zip(s.Skip(1))
                         .Select(t => (Math.Sign(s[0] - s[1]), t))
-                        .All(t => DeltaIsValid(t.Item2.First - t.Item2.Second) && Math.Sign(t.Item2.First - t.Item2.Second) == t.Item1))))
+                        .All(t => t.Item2.First - t.Item2.Second != 0 && Math.Abs(t.Item2.First - t.Item2.Second) <= 3 && Math.Sign(t.Item2.First - t.Item2.Second) == t.Item1))))
         .Count();
-
-    static bool DeltaIsValid(int delta)
-    {
-        if(Math.Abs(delta) > 3)
-        {
-            return false;
-        }
-
-        return delta != 0;
-    }
 }
