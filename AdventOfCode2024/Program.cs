@@ -6,7 +6,7 @@ internal static class Program
 {    
     static void Main(string[] args)
     {
-        string input = File.ReadAllText("stuff.txt");
+        string input = File.ReadAllText(@"C:\Users\1017251\Desktop\readme.txt");
 
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
