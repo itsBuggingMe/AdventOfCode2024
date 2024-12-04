@@ -8,7 +8,7 @@ internal class Day2 : ISolution
 {
     public int Day => 2;
 
-    public object Solve1(string input) => input
+    public object? Solve1(string input) => input
         .Split('\n')
         .Select(s => s.Split(' '))
         .Select(s => s.Select(int.Parse))
@@ -19,7 +19,7 @@ internal class Day2 : ISolution
         ))
         .Count();
 
-    public object Solve2(string input) => input
+    public object? Solve2(string input) => input
         .Split('\n')
         .Select(s => s.Split(' '))
         .Select(s => s.Select(int.Parse))

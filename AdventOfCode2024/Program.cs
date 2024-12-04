@@ -62,4 +62,10 @@ internal static class Program
         Console.WriteLine(v);
         return o;
     }
+
+    public static T Eval<T>(this T o, Action action)
+    {
+        action();
+        return o;
+    }
 }
