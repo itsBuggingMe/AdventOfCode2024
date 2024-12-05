@@ -38,7 +38,7 @@ internal class Day5 : ISolution
             .TakeWhile(e => t.Take(e.index).All(pn => !table[e.num].Contains((e.num, pn))))
             .Count() != t.Count()
             )
-        .Select(i => i.OrderBy(n => n, Comparer<int>.Create((a, b) => !table[a].Contains((a, b)) ? 1 : -1))).Break()
+        .Select(i => i.OrderBy(n => n, Comparer<int>.Create((a, b) => !table[a].Contains((a, b)) ? 1 : -1)))
         .Select(a => a.Skip(a.Count() / 2).First())
         .Sum()
         : throw null!;
