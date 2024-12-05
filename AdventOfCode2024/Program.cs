@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 
 namespace AdventOfCode2024;
 
@@ -6,7 +7,7 @@ internal static class Program
 {    
     static void Main(string[] args)
     {
-        string input = File.ReadAllText(@"C:\Users\1017251\Desktop\readme.txt");
+        string input = File.ReadAllText("input.aoc");
 
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
@@ -66,6 +67,12 @@ internal static class Program
     public static T Eval<T>(this T o, Action action)
     {
         action();
+        return o;
+    }
+
+    public static T Break<T>(this T o)
+    {
+        Debugger.Break();
         return o;
     }
 }
