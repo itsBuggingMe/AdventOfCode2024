@@ -52,6 +52,16 @@ internal static class Program
         return obj;
     }
 
+    public static IEnumerable<T> WriteLazy<T>(this IEnumerable<T> obj, Action<T>? oneach = null)
+    {
+        foreach(var item in obj)
+        {
+            oneach?.Invoke(item);
+            Console.WriteLine(item);
+            yield return item;
+        }
+    }
+    
     public static T WriteSelf<T>(this T o)
     {
         Console.WriteLine(o);
