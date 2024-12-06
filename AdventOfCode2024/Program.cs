@@ -64,12 +64,13 @@ internal static class Program
         return o;
     }
 
-    public static T Eval<T>(this T o, Action action)
+    public static T Eval<T>(this T o, Action<T> action)
     {
-        action();
+        action(o);
         return o;
     }
 
+    [DebuggerHidden]
     public static T Break<T>(this T o)
     {
         Debugger.Break();
