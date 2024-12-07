@@ -8,7 +8,8 @@ internal static class Program
     static void Main(string[] args)
     {
         string input = File.ReadAllText("input.aoc");
-
+        
+        
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Input:");
