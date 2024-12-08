@@ -9,7 +9,6 @@ internal static class Program
     {
         string input = File.ReadAllText("input.aoc");
         
-        
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Input:");
@@ -81,7 +80,6 @@ internal static class Program
         return o;
     }
 
-    [DebuggerHidden]
     public static T Break<T>(this T o)
     {
         Debugger.Break();

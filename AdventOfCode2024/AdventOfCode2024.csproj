@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Compile Update="ISolution.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
