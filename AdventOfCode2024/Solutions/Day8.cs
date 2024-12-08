@@ -5,16 +5,16 @@ internal class Day8 : ISolution
     public int Day => 8;
     public object? Solve1(string input) =>
         //tuple lib lol
-        Array.Empty<int>().Aggregate(((int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y), (a, b) => null!) is
+        (object)(((int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y)) is
         Func<(int, int), (int, int), (int, int)> add &&
-        Array.Empty<int>().Aggregate(((int x, int y) a, (int x, int y) b) => (a.x - b.x, a.y - b.y), (a, b) => null!) is
+        (object)(((int x, int y) a, (int x, int y) b) => (a.x - b.x, a.y - b.y)) is
         Func<(int, int), (int, int), (int, int)> sub &&
-        Array.Empty<int>().Aggregate(((int x, int y) a, (int x, int y) b) => (a.x * b.x, a.y * b.y), (a, b) => null!) is
+        (object)(((int x, int y) a, (int x, int y) b) => (a.x * b.x, a.y * b.y)) is
         Func<(int, int), (int, int), (int, int)> mul &&
 
         input.IndexOf('\n') is int width &&
         (int)Math.Round(input.Length / (width + 1f)) is int height &&
-        Array.Empty<int>().Aggregate(((int x, int y) a) => a.x >= 0 && a.y >= 0 && a.x < width && a.y < height, (a, b) => null!) is
+        (object)(((int x, int y) a) => a.x >= 0 && a.y >= 0 && a.x < width && a.y < height) is
         Func<(int, int), bool> inRange ?
 
         input
@@ -34,11 +34,11 @@ internal class Day8 : ISolution
         : throw null!;
 
     public object Solve2(string input) =>
-        Array.Empty<int>().Aggregate(((int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y), (a, b) => null!) is
+        (object)(((int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y)) is
         Func<(int, int), (int, int), (int, int)> add &&
-        Array.Empty<int>().Aggregate(((int x, int y) a, (int x, int y) b) => (a.x - b.x, a.y - b.y), (a, b) => null!) is
+        (object)(((int x, int y) a, (int x, int y) b) => (a.x - b.x, a.y - b.y)) is
         Func<(int, int), (int, int), (int, int)> sub &&
-        Array.Empty<int>().Aggregate(((int x, int y) a, (int x, int y) b) => (a.x * b.x, a.y * b.y), (a, b) => null!) is
+        (object)(((int x, int y) a, (int x, int y) b) => (a.x * b.x, a.y * b.y)) is
         Func<(int, int), (int, int), (int, int)> mul &&
 
         input.IndexOf('\n') is int width &&
@@ -62,4 +62,9 @@ internal class Day8 : ISolution
         .Count()
 
         : throw null!;
+
+    private object S(object i)
+    {
+        return i;
+    }
 }
