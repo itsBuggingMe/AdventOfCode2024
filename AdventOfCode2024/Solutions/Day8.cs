@@ -60,11 +60,5 @@ internal class Day8 : ISolution
                 ))
             .Distinct()
         .Count()
-
         : throw null!;
-
-    private object S(object i)
-    {
-        return i;
-    }
 }
