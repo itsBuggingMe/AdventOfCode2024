@@ -22,16 +22,16 @@ internal class Day10 : ISolution
             .Sum(t => recur(input, input.IndexOf('\n'), t.j, -1, new HashSet<int>()))
                 : throw null!;
     public object? Solve2(string input) =>
-        new Func<string, int, int, int, int, int>[1] is { } arr &&
-        (arr[0] = (string str, int width, int x, int pElevation, int prevLocation) => 
-            x >= str.Length || x < 0 || str[x] == '\n' || str[x] == '.' || str[x] - '0' != ++pElevation || prevLocation == x ?
+        new Func<string, int, int, int, int>[1] is { } arr &&
+        (arr[0] = (string str, int width, int x, int pElevation) => 
+            x >= str.Length || x < 0 || str[x] == '\n' || str[x] == '.' || str[x] - '0' != ++pElevation ?
                 0 : str[x] == '9' ? 1 : 
-                    arr[0](str, width, x + 1,         pElevation, x) + 
-                    arr[0](str, width, x - 1,         pElevation, x) + 
-                    arr[0](str, width, x - width - 1, pElevation, x) + 
-                    arr[0](str, width, x + width + 1, pElevation, x)) is { } recur ? input
+                    arr[0](str, width, x + 1, pElevation) + 
+                    arr[0](str, width, x - 1, pElevation) + 
+                    arr[0](str, width, x - width - 1, pElevation) + 
+                    arr[0](str, width, x + width + 1, pElevation)) is { } recur ? input
             .Select((i, j) => (j, i))
             .Where(t => t.i == '0')
-            .Sum(t => recur(input, input.IndexOf('\n'), t.j, -1, -10))
+            .Sum(t => recur(input, input.IndexOf('\n'), t.j, -1))
                 : throw null!;
 }
