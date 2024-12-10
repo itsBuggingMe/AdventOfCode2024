@@ -12,7 +12,7 @@ internal class Day6 : ISolution
             -1,
             0, input.IndexOf('^')
         } is int[] dirs &&
-        Array.Empty<int>().Aggregate((int i) => (uint)i < (uint)input.Length ? input[i] : '\n', (a, b) => null!)
+        Array.Empty<int>().Aggregate((int i) => unchecked((uint)i) < unchecked((uint)input.Length) ? input[i] : '\n', (a, b) => null!)
         is Func<int, char> charAt ?
         Enumerable.Range(0, int.MaxValue)
             .Select(i =>
@@ -36,7 +36,7 @@ internal class Day6 : ISolution
                 -1,//3
                 0/*4*/, input.IndexOf('^')/*5*/, input.IndexOf('^')
             } is int[] dirs &&
-            Array.Empty<int>().Aggregate((int i) => (uint)i < (uint)buffer.Length ? buffer[i] : '\n', (a, b) => null!)
+            Array.Empty<int>().Aggregate((int i) => unchecked((uint)i) < unchecked((uint)buffer.Length) ? buffer[i] : '\n', (a, b) => null!)
             is Func<int, char> charAt ?
             buffer
                 .Select((c, index) => (index, c))
