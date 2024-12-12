@@ -8,7 +8,8 @@ internal static class Program
     static void Main(string[] args)
     {
         string input = File.ReadAllText("input.aoc");
-        
+        input = input.ReplaceLineEndings("\n");
+
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Input:");
@@ -33,6 +34,26 @@ internal static class Program
         Console.WriteLine("\nSolutions:");
         Console.WriteLine(s1?.ToString() ?? "Part 1 Not Implemented");
         Console.WriteLine(s2?.ToString() ?? "Part 2 Not Implemented");
+
+        for(int i = 0; i < 3; i++)
+        {
+            solutionToUse.Solve1(input);
+            solutionToUse.Solve2(input);
+        }
+
+        GC.Collect();
+        var time = Stopwatch.StartNew();
+        for(int i = 0; i < 10; i++)
+            solutionToUse.Solve1(input);
+        time.Stop();
+        Console.WriteLine($"P1 Time: {time.Elapsed.TotalMilliseconds / 10}ms");
+
+        GC.Collect();
+        time.Restart();
+        for (int i = 0; i < 10; i++)
+            solutionToUse.Solve2(input);
+        time.Stop();
+        Console.WriteLine($"P2 Time: {time.Elapsed.TotalMilliseconds / 10}ms");
     }
 
     public static IEnumerable<T> WriteIter<T>(this IEnumerable<T> obj, Action<T>? tranform = null, bool newline = false)
