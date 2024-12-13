@@ -35,6 +35,8 @@ internal static class Program
         Console.WriteLine(s1?.ToString() ?? "Part 1 Not Implemented");
         Console.WriteLine(s2?.ToString() ?? "Part 2 Not Implemented");
 
+        Console.ReadLine();
+
         for(int i = 0; i < 3; i++)
         {
             solutionToUse.Solve1(input);
