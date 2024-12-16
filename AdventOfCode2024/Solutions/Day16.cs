@@ -21,12 +21,21 @@ internal class Day16 : ISolution
         new SortedDictionary<int, int>(input.Select((c, i) => (i, c)).Where(c => c.c == '.').ToDictionary(c => c.i, c => int.MaxValue))
          is { } dists ?
             Enumerable.Range(0, int.MaxValue)
-            .Select(t => dists[start + deltas[direction].F] = 1)
-            .Select(t => dists[start + deltas[direction].A] = 1000)
-            .Select(t => dists[start + deltas[direction].B] = 1000)
-            .Select(t => visited.Add(start))
-            .Select(t => start =  dists.MinBy(kvp => kvp.Value).Key)
-            .TakeWhile(t => input[start] != 'E')
+            .Select(t => dists.TryGetValue(current + deltas[direction].F, out int v) ? dists[current + deltas[direction].F] = 1 : 0)
+            .Select(t => dists.TryGetValue(current + deltas[direction].A, out int v) ? dists[current + deltas[direction].A] = 1000 : 0)
+            .Select(t => dists.TryGetValue(current + deltas[direction].B, out int v) ? dists[current + deltas[direction].B] = 1000 : 0)
+            .Select(t => visited.Add(current))
+            //.Select(t => current =  dists.MinBy(kvp => kvp.Value).Key)
+            .TakeWhile(t => 
+			{
+				var chararr = input.ToArray();
+				dists.ToList().ForEach(t => chararr[t.Key] = t.Value == int.MaxValue ? 'I' : (char)('0' + t.Value % 10));
+				Console.WriteLine(new string(chararr));
+				Console.WriteLine();
+				Console.ReadLine();
+				return input[current] != 'E';
+			})
+			.Count()
         : throw null!;
 
     public object? Solve2(string input) => input;
