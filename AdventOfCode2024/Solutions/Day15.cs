@@ -7,27 +7,27 @@ internal class Day15 : ISolution
 {
     public int Day => 15;
     public object? Solve1(string input) => input.Split("\n\n") is { } arr &&
-    arr[0].Split('\n').Select(s => s.Replace('@', '.').ToArray()).ToArray() is char[][] buffer &&
-    input.IndexOf('\n') is int width &&
-    arr[1].Replace("\n", "") is string instruction &&
-    (input.IndexOf('@') % (width + 1)) is int px &&
-    (input.IndexOf('@') / (width + 1)) is int py &&
-    (object)((int dx, int dy, int max) =>
-        Enumerable.Range(1, max - 1)
-            .Select(i => (x: px + dx * i, y: py + dy * i))
-            .Select(t => (t.x, t.y, buffer[t.y][t.x]))
-            .First(t => t.Item3 != 'O') is { } last && last.Item3 == '#' ? false : ((buffer[py + dy][px + dx], buffer[last.y][last.x]) = (buffer[last.y][last.x], buffer[py + dy][px + dx])) is { }) is
-    Func<int, int, int, bool> step &&
-    instruction.Select(c => c switch
-    {
-        '<' => step(-1, 0, px + 1) ? px-- : px,
-        '>' => step(1, 0, width - px) ? px++ : px,
-        '^' => step(0, -1, py + 1) ? py-- : px,
-        'v' => step(0, 1, width - py) ? py++ : px,
-        _ => throw new Exception($"Rogue {c} character in instructions!")
-    }).Count() != -1 ?
-        buffer.SelectMany((i, j) => i.Select((c, k) => (c, x: k, y: j))).Where(c => c.c == 'O').Sum(t => t.x + t.y * 100)
-    : throw null!;
+        arr[0].Split('\n').Select(s => s.Replace('@', '.').ToArray()).ToArray() is char[][] buffer &&
+        input.IndexOf('\n') is int width &&
+        arr[1].Replace("\n", "") is string instruction &&
+        (input.IndexOf('@') % (width + 1)) is int px &&
+        (input.IndexOf('@') / (width + 1)) is int py &&
+        (object)((int dx, int dy, int max) =>
+            Enumerable.Range(1, max - 1)
+                .Select(i => (x: px + dx * i, y: py + dy * i))
+                .Select(t => (t.x, t.y, buffer[t.y][t.x]))
+                .First(t => t.Item3 != 'O') is { } last && last.Item3 == '#' ? false : ((buffer[py + dy][px + dx], buffer[last.y][last.x]) = (buffer[last.y][last.x], buffer[py + dy][px + dx])) is { }) is
+        Func<int, int, int, bool> step &&
+        instruction.Select(c => c switch
+        {
+            '<' => step(-1, 0, px + 1) ? px-- : px,
+            '>' => step(1, 0, width - px) ? px++ : px,
+            '^' => step(0, -1, py + 1) ? py-- : px,
+            'v' => step(0, 1, width - py) ? py++ : px,
+            _ => throw new Exception($"Rogue {c} character in instructions!")
+        }).Count() != -1 ?
+            buffer.SelectMany((i, j) => i.Select((c, k) => (c, x: k, y: j))).Where(c => c.c == 'O').Sum(t => t.x + t.y * 100)
+        : throw null!;
 
     public object? Solve2(string input) => (input = input!.Replace("#", "##").Replace("O", "[]").Replace(".", "..").Replace("@", "@.")) is { } && input.Split("\n\n") is { } arr &&
         arr[0].Split('\n').Select(s => s.Replace('@', '.').ToArray()).ToArray() is char[][] buffer &&
