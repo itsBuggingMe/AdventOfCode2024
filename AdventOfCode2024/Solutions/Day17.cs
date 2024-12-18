@@ -34,7 +34,44 @@ internal class Day17 : ISolution
                     .Select(t => t.Item1))
                 : throw null!;
 
-    public object? Solve2(string input)
+    public object? Solve2(string input) => Regex.Matches(input, @"\d+")
+           .Select(s => long.Parse(s.ValueSpan)).ToArray() is { } p &&
+                (object)((long[] p) =>
+                p[..3] is { } reg &&
+                p[3..] is { } program &&
+                (object)((long i) => program[i + 1] is { } op && op < 4 ? op : reg[op - 4]) is
+                Func<long, long> combo &&
+                0L is { } pc ?
+                    Enumerable.Range(0, int.MaxValue)
+                    .Select(t => pc < program.Length ? program[pc] switch
+                    {
+                        0 => (reg[0] = reg[0] / (1 << (int)combo(pc)), 0),
+                        1 => (reg[1] ^= program[pc + 1], 0),
+                        2 => (reg[1] = combo(pc) & 7, 0),
+                        3 => (reg[0] == 0 ? 0 : pc = program[pc + 1] - 2, 0),
+                        4 => (reg[1] ^= reg[2], 0),
+                        5 => (combo(pc) & 7, 1),
+                        6 => (reg[1] = reg[0] / (1 << (int)combo(pc)), 0),
+                        7 => (reg[2] = reg[0] / (1 << (int)combo(pc)), 0),
+                        _ => throw new Exception()
+                    } : (0, -1))
+                    .Select(t => (pc += 2) is { } ? t : throw null!)
+                    .TakeWhile(t => t.Item2 != -1)
+                    .Where(t => t.Item2 == 1)
+                    .Select(t => (int)t.Item1) : throw null!) is Func<long[], IEnumerable<int>> runProgram &&
+                0L is { } currentGuess && p[3..].Select(i => (int)i).Reverse().ToArray() is { } instruction && 1 is { } nowMatch &&
+                Enumerable.Range(0, int.MaxValue)
+                    .Select(i => p[2] = p[1] = 0)
+                    .Select(i => p[0] = currentGuess)
+                    .Select(i => runProgram(p).Reverse().SequenceEqual(instruction.Take(nowMatch)) ? ++nowMatch + (currentGuess *= 8) : currentGuess++)
+                    .TakeWhile(i => nowMatch != p.Length - 2)
+                    .Count()
+                    != -1 ?
+                currentGuess / 8
+            : throw null!;
+
+    #region Sane Solution
+    private object? Solve(string input)
     {
         var program = Regex.Matches(input, @"\d+")
                .Select(s => int.Parse(s.ValueSpan)).ToArray();
@@ -122,6 +159,7 @@ internal class Day17 : ISolution
 
         return output.Slice(0, outputPtr);
     }
+    #endregion Sane Solution
 }
 
 
