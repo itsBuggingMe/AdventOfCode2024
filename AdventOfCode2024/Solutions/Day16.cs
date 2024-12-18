@@ -8,7 +8,7 @@ internal class Day16 : ISolution
     public object? Solve1(string input) =>
         0 is { } direction &&
         input.IndexOf('\n') + 1  is { } width &&
-        input.IndexOf('S')  is { } start &&
+        input.IndexOf('S')  is { } current &&
         input.IndexOf('E')  is { } end &&
         new (int F, int A, int B)[]
         {
