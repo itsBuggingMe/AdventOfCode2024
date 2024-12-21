@@ -7,6 +7,7 @@ internal static class Program
 {    
     static void Main(string[] args)
     {
+        args = new string[] { "16" };
         string input = File.ReadAllText("input.aoc");
         input = input.ReplaceLineEndings("\n");
 
@@ -24,7 +25,7 @@ internal static class Program
             .ToArray();
 
 
-        ISolution solutionToUse = args.Length == 0 ? solutions[^1] : solutions[int.Parse(args[0])];
+        ISolution solutionToUse = args.Length == 0 ? solutions[^1] : solutions[int.Parse(args[0]) - 1];
 
         Console.ForegroundColor = ConsoleColor.White;
 
