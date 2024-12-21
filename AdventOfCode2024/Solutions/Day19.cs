@@ -10,46 +10,37 @@ internal class Day19 : ISolution
     public int Day => 19;
     public object? Solve1(string input) => 
         input[..input.IndexOf("\n\n")].Split(',').Select(t => t.Trim()).ToArray() is { } towels &&
-        (object)((object self, ReadOnlyMemory<char> match, string?[] b) =>
-        {
-            return b.Select((j, i) => (index: i, patt: j))
-                .Where(c => c.patt is not null)
-                .Any(f =>
-                {
-                    if(match.Length == 0)
-                    {
-                        return true;
-                    }
-
-                    if (match.Span.StartsWith(f.patt))
-                    {
-                        b[f.index] = null;
-                        bool result = ((Func<object, ReadOnlyMemory<char>, string?[], bool>)self)(self, match.Slice(f.patt.Length), b);
-
-                        if (result)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            b[f.index] = f.patt;
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                });
-        })
-        is Func<object, ReadOnlyMemory<char>, string?[], bool> pattern ?
+        (object)((object self, string match, int start, string?[] b, Dictionary<int, bool> cache) => 
+            cache
+                .TryGetValue(match.AsMemory(start).GetHashCode(), out var x) ? 
+                    x : 
+            (cache[match.AsMemory(start).GetHashCode()] = b
+                .Any(f => match.Length == start || 
+                    match.AsSpan(start).StartsWith(f) && 
+                    ((Func<object, string, int, string?[], Dictionary<int, bool>, bool>)self)(self, match, start + f.Length, b, cache))))
+        is Func<object, string, int, string?[], Dictionary<int, bool>, bool> pattern ?
             input[input.IndexOf("\n\n")..]
                 .Split('\n')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrEmpty(t))
-                .Count(t => pattern(pattern, t.AsMemory(), towels).WriteSelf())
+                .Count(t => pattern(pattern, t, 0, towels, new()))
         : throw null!;
-    public object? Solve2(string input) => null;
+    public object? Solve2(string input) =>
+        input[..input.IndexOf("\n\n")].Split(',').Select(t => t.Trim()).ToArray() is { } towels &&
+        (object)((object self, string match, int start, string?[] b, Dictionary<int, long> cache) => cache
+            .TryGetValue(match.AsMemory(start).GetHashCode(), out long x) ? 
+                x : 
+            (start == match.Length ? 
+                1 : 
+            cache[match.AsMemory(start).GetHashCode()] = b
+                .Sum(f => match.AsSpan(start).StartsWith(f) ? ((Func<object, string, int, string?[], Dictionary<int, long>, long>)self)(self, match, start + f.Length, b, cache) : 0L)))
+        is Func<object, string, int, string?[], Dictionary<int, long>, long> pattern ?
+            input[input.IndexOf("\n\n")..]
+                .Split('\n')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrEmpty(t))
+                .Sum(t => pattern(pattern, t, 0, towels, new()))
+        : throw null!;
 }
 
 
