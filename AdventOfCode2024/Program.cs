@@ -58,7 +58,7 @@ internal static class Program
         Console.WriteLine($"P2 Time: {time.Elapsed.TotalMilliseconds / 10}ms");
     }
 
-    public static IEnumerable<T> WriteIter<T>(this IEnumerable<T> obj, Action<T>? tranform = null, bool newline = false)
+    public static IEnumerable<T> WriteIter<T>(this IEnumerable<T> obj, Action<T>? tranform = null, bool newline = true)
     {
         foreach(var t in obj)
         {
@@ -103,9 +103,12 @@ internal static class Program
         return o;
     }
 
-    public static T Break<T>(this T o)
+    public static T Break<T>(this T o, Func<T, bool>? predicate = null)
     {
-        Debugger.Break();
+        if(predicate is null || predicate(o))
+        {
+            Debugger.Break();
+        }
         return o;
     }
 }

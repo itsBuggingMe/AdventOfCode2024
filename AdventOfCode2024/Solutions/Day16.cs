@@ -7,35 +7,26 @@ internal class Day16 : ISolution
     public int Day => 16;
     public object? Solve1(string input) =>
         0 is { } direction &&
-        input.IndexOf('\n') + 1  is { } width &&
-        input.IndexOf('S')  is { } current &&
-        input.IndexOf('E')  is { } end &&
-        new (int F, int A, int B)[]
+        input.IndexOf('\n') + 1 is { } width &&
+        input.IndexOf('S') is { } current &&
+        input.IndexOf('E') is { } end &&
+        (input = input!.Replace('S', '.').Replace('E', '.')) is { } &&
+        
+        new int[]
         {
-            (-width, 1, -1),
-            (1, width, -width),
-            (-1, width, -width),
-            (-width, 1, -1),
-        } is { } deltas &&
+            -width,
+            1,
+            width,
+            -1
+        } is { } deltaTable &&
+
         new HashSet<int>() is { } visited &&
-        new SortedDictionary<int, int>(input.Select((c, i) => (i, c)).Where(c => c.c == '.').ToDictionary(c => c.i, c => int.MaxValue))
-         is { } dists ?
-            Enumerable.Range(0, int.MaxValue)
-            .Select(t => dists.TryGetValue(current + deltas[direction].F, out int v) ? dists[current + deltas[direction].F] = 1 : 0)
-            .Select(t => dists.TryGetValue(current + deltas[direction].A, out int v) ? dists[current + deltas[direction].A] = 1000 : 0)
-            .Select(t => dists.TryGetValue(current + deltas[direction].B, out int v) ? dists[current + deltas[direction].B] = 1000 : 0)
-            .Select(t => visited.Add(current))
-            //.Select(t => current =  dists.MinBy(kvp => kvp.Value).Key)
-            .TakeWhile(t => 
-			{
-				var chararr = input.ToArray();
-				dists.ToList().ForEach(t => chararr[t.Key] = t.Value == int.MaxValue ? 'I' : (char)('0' + t.Value % 10));
-				Console.WriteLine(new string(chararr));
-				Console.WriteLine();
-				Console.ReadLine();
-				return input[current] != 'E';
-			})
-			.Count()
+        input
+            .Select((c, i) => (i, c))
+            .Where(c => c.c == '.')
+            .SelectMany(t => new[] { (t.i, 0), (t.i, 1), (t.i, 2), (t.i, 3) })
+            .ToDictionary(c => (x: c.i, dir: c.Item2), c => int.MaxValue - 1) is { } dists ?
+        dists.Where(t => true)
         : throw null!;
 
     public object? Solve2(string input) => input;
