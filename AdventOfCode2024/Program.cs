@@ -7,7 +7,6 @@ internal static class Program
 {    
     static void Main(string[] args)
     {
-        args = new string[] { "19" };
         string input = File.ReadAllText("input.aoc");
         input = input.ReplaceLineEndings("\n");
 
