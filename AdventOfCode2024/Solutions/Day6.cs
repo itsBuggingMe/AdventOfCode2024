@@ -26,7 +26,7 @@ internal class Day6 : ISolution
             .Count
         : throw null!;
 
-    public object Solve2(string input) =>
+    public object? Solve2(string input) =>
             input.ToArray() is char[] buffer &&
             input.IndexOf('\n') is int accWidth &&
             new int[] {

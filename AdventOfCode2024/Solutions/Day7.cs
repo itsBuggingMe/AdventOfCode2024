@@ -16,7 +16,7 @@ internal class Day7 : ISolution
         )
         .Sum(t => t.head);
 
-    public object Solve2(string input) =>
+    public object? Solve2(string input) =>
         input.Split('\n')
         .Select(s => (head: long.Parse(s.AsSpan(0, s.IndexOf(':'))), tail: s[(s.IndexOf(':')+2)..].Split(' ').Select(long.Parse).ToArray()))
         .Where(t => Enumerable

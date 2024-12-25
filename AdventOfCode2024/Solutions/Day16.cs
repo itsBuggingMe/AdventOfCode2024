@@ -5,7 +5,6 @@ namespace AdventOfCode2024.Solutions;
 
 internal class Day16 : ISolution
 {
-    static Dictionary<(int, int), int> kvp = new Dictionary<(int, int), int>();
     public int Day => 16;
     public object? Solve1(string input) =>
         input.IndexOf('\n') + 1 is { } width &&
@@ -18,7 +17,7 @@ internal class Day16 : ISolution
         } is { } deltaTable &&
         (object)(((int, int) current, Func<(int, int), IEnumerable<((int, int) Location, int Weight)>> getEdges) =>
                 new HashSet<(int, int)>() is { } visited &&
-                (kvp = new Dictionary<(int, int), int>
+                (new Dictionary<(int, int), int>
                 {
                     { current, 0 },
                 }) is { } costs &&
@@ -30,17 +29,14 @@ internal class Day16 : ISolution
                         .Count() is { } ?
                 costs
             : throw null!) is Func<(int, int), Func<(int Pos, int Dir), IEnumerable<((int, int) Location, int Weight)>>, Dictionary<(int, int), int>> dijkstra &&
-        dijkstra((input.IndexOf('S'), 1), t =>
-        {
-            return t.Pos + deltaTable[t.Dir] is int forward && forward >= 0 && forward < input.Length && input[forward] != '\n' && input[forward] != '#' ?
+        dijkstra((input.IndexOf('S'), 1), t => t.Pos + deltaTable[t.Dir] is int forward && forward >= 0 && forward < input.Length && input[forward] != '\n' && input[forward] != '#' ?
             new ((int, int), int)[] {
                     ((forward, t.Dir), 1),
                     ((t.Pos, (t.Dir + 4 + 1) % 4), 1000),
                     ((t.Pos, (t.Dir + 4 - 1) % 4), 1000) }
                 : new ((int, int), int)[] {
                     ((t.Pos, (t.Dir + 4 + 1) % 4), 1000),
-                    ((t.Pos, (t.Dir + 4 - 1) % 4), 1000) };
-        }) is { } dists ?
+                    ((t.Pos, (t.Dir + 4 - 1) % 4), 1000) }) is { } dists ?
             new int[] { dists[(input.IndexOf('E'), 0)], dists[(input.IndexOf('E'), 1)], dists[(input.IndexOf('E'), 2)], dists[(input.IndexOf('E'), 3)] }.Min()
         : throw null!;
 
@@ -54,7 +50,7 @@ internal class Day16 : ISolution
         } is { } deltaTable &&
         (object)(((int, int) current, Func<(int, int), IEnumerable<((int, int) Location, int Weight)>> getEdges) =>
                 new HashSet<(int, int)>() is { } visited &&
-                (kvp = new Dictionary<(int, int), int>
+                (new Dictionary<(int, int), int>
                 {
                     { current, 0 },
                 }) is { } costs &&
@@ -66,17 +62,14 @@ internal class Day16 : ISolution
                         .Count() is { } ?
                 costs
             : throw null!) is Func<(int, int), Func<(int Pos, int Dir), IEnumerable<((int, int) Location, int Weight)>>, Dictionary<(int, int), int>> dijkstra &&
-        dijkstra((input.IndexOf('S'), 1), t =>
-        {
-            return t.Pos + deltaTable[t.Dir] is int forward && forward >= 0 && forward < input.Length && input[forward] != '\n' && input[forward] != '#' ?
+        dijkstra((input.IndexOf('S'), 1), t => t.Pos + deltaTable[t.Dir] is int forward && forward >= 0 && forward < input.Length && input[forward] != '\n' && input[forward] != '#' ?
             new ((int, int), int)[] {
                     ((forward, t.Dir), 1),
                     ((t.Pos, (t.Dir + 4 + 1) % 4), 1000),
                     ((t.Pos, (t.Dir + 4 - 1) % 4), 1000) }
                 : new ((int, int), int)[] {
                     ((t.Pos, (t.Dir + 4 + 1) % 4), 1000),
-                    ((t.Pos, (t.Dir + 4 - 1) % 4), 1000) };
-        }) is { } dists &&
+                    ((t.Pos, (t.Dir + 4 - 1) % 4), 1000) }) is { } dists &&
         (object)((object self, HashSet<(int, int)> set, (int Pos, int Dir) current, int expected) => 
             self is Func<object, HashSet<(int, int)>, (int Pos, int Dir), int, HashSet<(int, int)>> x && 
             current.Pos >= 0 && 

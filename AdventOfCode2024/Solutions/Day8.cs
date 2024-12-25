@@ -33,7 +33,7 @@ internal class Day8 : ISolution
 
         : throw null!;
 
-    public object Solve2(string input) =>
+    public object? Solve2(string input) =>
         (object)(((int x, int y) a, (int x, int y) b) => (a.x + b.x, a.y + b.y)) is
         Func<(int, int), (int, int), (int, int)> add &&
         (object)(((int x, int y) a, (int x, int y) b) => (a.x - b.x, a.y - b.y)) is
